@@ -1,4 +1,4 @@
-﻿namespace ECrun
+﻿namespace Wecres.ECrun
 {
     partial class Form1
     {
