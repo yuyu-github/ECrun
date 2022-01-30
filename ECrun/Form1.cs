@@ -41,6 +41,41 @@ namespace Wecres.ECrun
             },
         };
 
+        Dictionary<string, Dictionary<string, Dictionary<string, Action<Dictionary<string, string>>>>> Functions =
+            new Dictionary<string, Dictionary<string, Dictionary<string, Action<Dictionary<string, string>>>>>
+        {
+            {
+                "BuildEnv", new Dictionary<string, Dictionary<string, Action<Dictionary<string, string>>>> {
+                    {
+                        "React", new Dictionary<string, Action<Dictionary<string, string>>>
+                        {
+                            {
+                                "Default", data =>
+                                {
+
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "Run", new Dictionary<string, Dictionary<string, Action<Dictionary<string, string>>>> {
+                    {
+                        "React", new Dictionary<string, Action<Dictionary<string, string>>>
+                        {
+                            {
+                                "Default", data =>
+                                {
+
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+        };
+
         class ComboBoxItems
         {
             public class ComboBoxItem
@@ -104,8 +139,14 @@ namespace Wecres.ECrun
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            if (textBox1.Text != "")
+            {
+                Functions[comboBox1.SelectedValue.ToString()][comboBox2.SelectedValue.ToString()][comboBox3.SelectedValue.ToString()](new Dictionary<string, string>
+                {
+                    { "name", textBox2.Text },
+                    { "path", textBox1.Text },
+                });
+            }
         }
-
     }
 }
