@@ -18,7 +18,6 @@ namespace Wecres.ECrun
     {
         static Collection<PSObject> RunPowershell(string script)
         {
-            Console.WriteLine(script);
             using (var invoker = new RunspaceInvoke()) return invoker.Invoke(script);
         }
 
@@ -40,11 +39,13 @@ namespace Wecres.ECrun
             {
                 "BuildEnv", new ComboBoxItems(new string[,] {
                     { "React", "React" },
+                    { "React (TypeScript)", "React-TypeScript" },
                 })
             },
             {
                 "Run", new ComboBoxItems(new string[,] {
                     { "React", "React" },
+                    { "React (TypeScript)", "React-TypeScript" },
                 })
             },
         };
@@ -92,7 +93,32 @@ Rename-Item ""{name}"" ""{data["name"]}""
                                 }
                             }
                         }
-                    }
+                    },
+                    {
+                        "React-TypeScript", new Dictionary<string, Action<Dictionary<string, string>>>
+                        {
+                            {
+                                "Default", data =>
+                                {
+                                    if (TestNodeJS())
+                                    {
+                                        string name = Regex.Replace(data["name"].ToLower(), @"[^a-z0-9\-_]", "");
+                                        int randomValue = new Random().Next(0, int.MaxValue);
+                                        Task.Run(() => RunPowershell($@"
+Set-Location ""{data["path"]}""
+npx create-react-app ""{name}"" --template typescript
+{(name == data["name"].ToLower() ? $@"
+Rename-Item ""{name}"" ""{name + randomValue}""
+Rename-Item ""{name + randomValue}"" ""{data["name"]}""
+" : $@"
+Rename-Item ""{name}"" ""{data["name"]}""
+")}
+"));
+                                    }
+                                }
+                            }
+                        }
+                    },
                 }
             },
             {
@@ -114,7 +140,25 @@ npm start
                                 }
                             }
                         }
-                    }
+                    },
+                    {
+                        "React-TypeScript", new Dictionary<string, Action<Dictionary<string, string>>>
+                        {
+                            {
+                                "Default", data =>
+                                {
+                                    if (TestNodeJS())
+                                    {
+                                        string name = Regex.Replace(data["name"].ToLower(), @"[^a-z0-9\-_]", "");
+                                        Task.Run(() => RunPowershell($@"
+Set-Location ""{data["path"] + "\\" + data["name"]}""
+npm start
+"));
+                                    }
+                                }
+                            }
+                        }
+                    },
                 }
             },
         };
