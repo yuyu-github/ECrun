@@ -7,13 +7,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Management.Automation;
+using System.Text.RegularExpressions;
+using System.Collections.ObjectModel;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace Wecres.ECrun
 {
     public partial class Form1 : Form
     {
-       Dictionary<string, ComboBoxItems> Types = new Dictionary<string, ComboBoxItems>
+        static Collection<PSObject> RunPowershell(string script)
+        {
+            Console.WriteLine(script);
+            using (var invoker = new RunspaceInvoke()) return invoker.Invoke(script);
+        }
+
+        static bool TestNodeJS()
+        {
+            foreach (var result in RunPowershell("(Get-Command node -ErrorAction SilentlyContinue) -eq $null"))
+            {
+                if (result.ToString() == "true")
+                {
+                    MessageBox.Show("Node.jsをインストールしてください");
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        Dictionary<string, ComboBoxItems> Types = new Dictionary<string, ComboBoxItems>
         {
             {
                 "BuildEnv", new ComboBoxItems(new string[,] {
@@ -52,7 +74,15 @@ namespace Wecres.ECrun
                             {
                                 "Default", data =>
                                 {
-
+                                    if (TestNodeJS())
+                                    {
+                                        string name = Regex.Replace(data["name"].ToLower(), @"[^a-z]", "");
+                                        RunPowershell($@"
+Set-Location ""{data["path"]}""
+npx create-react-app ""{name}""
+Rename-Item -Path ""{name}"" -NewName ""{data["name"]}""
+");
+                                    }
                                 }
                             }
                         }
