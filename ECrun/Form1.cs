@@ -76,7 +76,7 @@ namespace Wecres.ECrun
                                 {
                                     if (TestNodeJS())
                                     {
-                                        string name = Regex.Replace(data["name"].ToLower(), @"[^a-z]", "");
+                                        string name = Regex.Replace(data["name"].ToLower(), @"[^a-z0-9\-_]", "");
                                         int randomValue = new Random().Next(0, int.MaxValue);
                                         Task.Run(() => RunPowershell($@"
 Set-Location ""{data["path"]}""
