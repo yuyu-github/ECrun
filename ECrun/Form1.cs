@@ -77,11 +77,11 @@ namespace Wecres.ECrun
                                     if (TestNodeJS())
                                     {
                                         string name = Regex.Replace(data["name"].ToLower(), @"[^a-z]", "");
-                                        RunPowershell($@"
+                                        Task.Run(() => RunPowershell($@"
 Set-Location ""{data["path"]}""
 npx create-react-app ""{name}""
 Rename-Item -Path ""{name}"" -NewName ""{data["name"]}""
-");
+"));
                                     }
                                 }
                             }
