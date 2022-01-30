@@ -157,6 +157,7 @@
             // 
             // comboBox3
             // 
+            this.comboBox3.DisplayMember = "Name";
             this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox3.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.comboBox3.FormattingEnabled = true;
@@ -164,6 +165,7 @@
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(308, 23);
             this.comboBox3.TabIndex = 12;
+            this.comboBox3.ValueMember = "Id";
             // 
             // Form1
             // 

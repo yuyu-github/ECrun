@@ -12,17 +12,17 @@ namespace Wecres.ECrun
 {
     public partial class Form1 : Form
     {
-       Dictionary<string, string[]> Types = new Dictionary<string, string[]>
+       Dictionary<string, ComboBoxItems> Types = new Dictionary<string, ComboBoxItems>
         {
             {
-                "BuildEnv", new string[]{
-                    "React",
-                }
+                "BuildEnv", new ComboBoxItems(new string[,] {
+                    { "React", "React" },
+                })
             },
             {
-                "Run", new string[] {
-                    "Reac",
-                }
+                "Run", new ComboBoxItems(new string[,] {
+                    { "React", "React" },
+                })
             },
         };
 
@@ -64,14 +64,8 @@ namespace Wecres.ECrun
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var Items = Types[comboBox1.SelectedValue.ToString()];
-
-            comboBox2.Items.Clear();
-            foreach (var Item in Items)
-            {
-                comboBox2.Items.Add(Item);
-            }
-            if (comboBox2.Items.Count != 0) comboBox2.SelectedIndex = 0;
+            comboBox2.DataSource = Types[comboBox1.SelectedValue.ToString()].List;
+            comboBox2.SelectedIndex = 0;
         }
 
         private void button2_Click(object sender, EventArgs e)
