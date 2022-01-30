@@ -103,7 +103,14 @@ Rename-Item ""{name}"" ""{data["name"]}""
                             {
                                 "Default", data =>
                                 {
-
+                                    if (TestNodeJS())
+                                    {
+                                        string name = Regex.Replace(data["name"].ToLower(), @"[^a-z0-9\-_]", "");
+                                        Task.Run(() => RunPowershell($@"
+Set-Location ""{data["path"] + "\\" + data["name"]}""
+npm start
+"));
+                                    }
                                 }
                             }
                         }
