@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace Wecres.ECrun
 {
@@ -91,7 +92,14 @@ namespace Wecres.ECrun
 
         private void button2_Click(object sender, EventArgs e)
         {
-            
+            var dialog = new CommonOpenFileDialog();
+            dialog.Title = "フォルダの選択";
+            dialog.RestoreDirectory = true;
+            dialog.IsFolderPicker = true;
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                textBox1.Text = dialog.FileName;
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
