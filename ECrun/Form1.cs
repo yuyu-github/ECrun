@@ -26,6 +26,20 @@ namespace Wecres.ECrun
             },
         };
 
+        Dictionary<string, Dictionary<string, ComboBoxItems>> Templates = new Dictionary<string, Dictionary<string, ComboBoxItems>>
+        {
+            {
+                "BuildEnv", new Dictionary<string, ComboBoxItems> {
+                    
+                }
+            },
+            {
+                "Run", new Dictionary<string, ComboBoxItems> {
+
+                }
+            },
+        };
+
         class ComboBoxItems
         {
             public class ComboBoxItem
@@ -36,14 +50,14 @@ namespace Wecres.ECrun
 
             public List<ComboBoxItem> List { get; set; } = new List<ComboBoxItem>();
 
-            public ComboBoxItems(string[,] Items)
+            public ComboBoxItems(string[,] items)
             {
-                for (int i = 0; i < Items.Length / 2; i++)
+                for (int i = 0; i < items.Length / 2; i++)
                 {
-                    var Item = new ComboBoxItem();
-                    Item.Name = Items[i, 0];
-                    Item.Id = Items[i, 1];
-                    this.List.Add(Item);
+                    var item = new ComboBoxItem();
+                    item.Name = items[i, 0];
+                    item.Id = items[i, 1];
+                    this.List.Add(item);
                 }
             }
         }
@@ -68,9 +82,16 @@ namespace Wecres.ECrun
             comboBox2.SelectedIndex = 0;
         }
 
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            comboBox3.DataSource = Templates[comboBox1.SelectedValue.ToString()]
+                .TryGetValue(comboBox2.SelectedValue.ToString(), out var result) ? result.List : (new ComboBoxItems(new string[,] { { "デフォルト", "Default" } })).List;
+            comboBox3.SelectedIndex = 0;
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void button1_Click(object sender, EventArgs e)

@@ -101,6 +101,7 @@
             this.comboBox2.Size = new System.Drawing.Size(189, 23);
             this.comboBox2.TabIndex = 6;
             this.comboBox2.ValueMember = "Id";
+            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
             // comboBox1
             // 
