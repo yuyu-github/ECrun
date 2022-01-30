@@ -77,10 +77,16 @@ namespace Wecres.ECrun
                                     if (TestNodeJS())
                                     {
                                         string name = Regex.Replace(data["name"].ToLower(), @"[^a-z]", "");
+                                        int randomValue = new Random().Next(0, int.MaxValue);
                                         Task.Run(() => RunPowershell($@"
 Set-Location ""{data["path"]}""
 npx create-react-app ""{name}""
-Rename-Item -Path ""{name}"" -NewName ""{data["name"]}""
+{(name == data["name"].ToLower() ? $@"
+Rename-Item ""{name}"" ""{name + randomValue}""
+Rename-Item ""{name + randomValue}"" ""{data["name"]}""
+" : $@"
+Rename-Item ""{name}"" ""{data["name"]}""
+")}
 "));
                                     }
                                 }
