@@ -27,13 +27,7 @@ namespace Wecres.ECrun
             {
                 "Run", new Dictionary<string, ComboBoxItems>
                 {
-                    {
-                        "React", new ComboBoxItems(new string[,]
-                        {
-                            { "デフォルト", "Default" },
-                            { "TypeScript", "TypeScript" },
-                        })
-                    },
+                    
                 }
             },
             {
