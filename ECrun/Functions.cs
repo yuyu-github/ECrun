@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 
 using static Wecres.ECrun.Form1;
@@ -201,12 +202,44 @@ export default App;
                 {
                     "Run", new Dictionary<string, Dictionary<string, Action<Dictionary<string, string>>>> 
                     {
-                        
+                        {
+                            "WebApp", new Dictionary<string, Action<Dictionary<string, string>>>
+                            {
+                                {
+                                    "TypeScript", data =>
+                                    {
+                                        Task.Run(() =>
+                                        {
+                                            RunPowershell($@"Set-Location {data["path"]}\{data["name"]}
+npx tsc");
+                                        });
+                                        string[] indexFileNames = Directory.GetFiles($@"{data["path"]}\{data["name"]}", "index.*", SearchOption.AllDirectories)
+                                            .Where(item => Regex.IsMatch(item, @"\.(html|htm|shtml|shtm|php|cgi)$")).ToArray();
+                                        if (indexFileNames.Length > 0) Process.Start(indexFileNames[0]);
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 {
                     "Compile", new Dictionary<string, Dictionary<string, Action<Dictionary<string, string>>>>
                     {
+                        {
+                            "WebApp", new Dictionary<string, Action<Dictionary<string, string>>>
+                            {
+                                {
+                                    "TypeScript", data =>
+                                    {
+                                        Task.Run(() =>
+                                        {
+                                            RunPowershell($@"Set-Location {data["path"]}\{data["name"]}
+npx tsc");
+                                        });
+                                    }
+                                }
+                            }
+                        },
                         {
                             "React", new Dictionary<string, Action<Dictionary<string, string>>>
                             {

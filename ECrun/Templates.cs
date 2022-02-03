@@ -33,13 +33,23 @@ namespace Wecres.ECrun
             {
                 "Run", new Dictionary<string, ComboBoxItems>
                 {
-                    
+                    {
+                        "WebApp", new ComboBoxItems(new string[,]
+                        {
+                            { "TypeScript", "TypeScript" }
+                        })
+                    },
                 }
             },
             {
                 "Compile", new Dictionary<string, ComboBoxItems>
                 {
-
+                    {
+                        "WebApp", new ComboBoxItems(new string[,]
+                        {
+                            { "TypeScript", "TypeScript" }
+                        })
+                    },
                 }
             },
             {

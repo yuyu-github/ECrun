@@ -22,12 +22,13 @@ namespace Wecres.ECrun
             {
                 "Run", new ComboBoxItems(new string[,]
                 {
-                    { "", "" },
+                    { "Webアプリ", "WebApp" },
                 })
             },
             {
                 "Compile", new ComboBoxItems(new string[,]
                 {
+                    { "Webアプリ", "WebApp" },
                     { "React", "React" }
                 })
             },
