@@ -15,13 +15,25 @@ namespace Wecres.ECrun
             {
                 "BuildEnv", new Dictionary<string, ComboBoxItems>
                 {
-
+                    {
+                        "React", new ComboBoxItems(new string[,]
+                        {
+                            { "デフォルト", "Default" },
+                            { "TypeScript", "TypeScript" },
+                        })
+                    },
                 }
             },
             {
                 "Run", new Dictionary<string, ComboBoxItems>
                 {
-
+                    {
+                        "React", new ComboBoxItems(new string[,]
+                        {
+                            { "デフォルト", "Default" },
+                            { "TypeScript", "TypeScript" },
+                        })
+                    },
                 }
             },
             {

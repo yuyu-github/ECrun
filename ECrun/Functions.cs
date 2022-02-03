@@ -79,14 +79,9 @@ namespace Wecres.ECrun
                                             });
                                         }
                                     }
-                                }
-                            }
-                        },
-                        {
-                            "React-TypeScript", new Dictionary<string, Action<Dictionary<string, string>>>
-                            {
+                                },
                                 {
-                                    "Default", data =>
+                                    "TypeScript", data =>
                                     {
                                         if (TestNodeJS())
                                         {
@@ -171,14 +166,9 @@ namespace Wecres.ECrun
                                             });
                                         }
                                     }
-                                }
-                            }
-                        },
-                        {
-                            "React-TypeScript", new Dictionary<string, Action<Dictionary<string, string>>>
-                            {
+                                },
                                 {
-                                    "Default", data =>
+                                    "TypeScript", data =>
                                     {
                                         if (TestNodeJS())
                                         {
