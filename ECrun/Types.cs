@@ -15,6 +15,7 @@ namespace Wecres.ECrun
             {
                 "BuildEnv", new ComboBoxItems(new string[,]
                 {
+                    { "Webアプリ", "WebApp" },
                     { "React", "React" },
                 })
             },

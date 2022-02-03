@@ -19,6 +19,59 @@ namespace Wecres.ECrun
                     "BuildEnv", new Dictionary<string, Dictionary<string, Action<Dictionary<string, string>>>> 
                     {
                         {
+                            "WebApp", new Dictionary<string, Action<Dictionary<string, string>>>
+                            {
+                                {
+                                    "TypeScript", data =>
+                                    {
+                                        if (TestNodeJS())
+                                        {
+                                            Task.Run(() =>
+                                            {
+                                                Directory.SetCurrentDirectory(data["path"]);
+                                                Directory.CreateDirectory(data["name"]);
+                                                Directory.SetCurrentDirectory(data["name"]);
+
+                                                RunPowershell($@"Set-Location ""{data["path"]}\{data["name"]}""
+npm init -y
+npm install typescript");
+
+                                                File.WriteAllText("tsconfig.json", @"{
+    ""compilerOptions"": {
+        ""target"": ""es2016"",
+        ""module"": ""commonjs"",
+        ""strict"": true,
+        ""outDir"": ""./dist"",
+    },
+    ""include"": [
+      ""src/**/*"",
+    ]
+}");
+                                                Directory.CreateDirectory("dist");
+                                                File.WriteAllText(@"dist\index.html", @"<!DOCTYPE html>
+<html lang=""ja"">
+<head>
+    <meta charset=""UTF-8"">
+    <title></title>
+    <link rel=""stylesheet"" href=""style.css"">
+</head>
+<body>
+    <script src=""main.js"" type=""module""></script>
+</body>
+</html>");
+                                                File.WriteAllText(@"dist\style.css", @"body {
+    margin: 0;
+    padding: 0;
+}");
+                                                Directory.CreateDirectory("src");
+                                                File.Create(@"src\main.ts").Close();
+                                            });
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
                             "React", new Dictionary<string, Action<Dictionary<string, string>>>
                             {
                                 {
@@ -30,7 +83,7 @@ namespace Wecres.ECrun
                                             Task.Run(() =>
                                             {
                                                 RunPowershell($@"Set-Location ""{data["path"]}""
-    npx create-react-app ""{name}""");
+npx create-react-app ""{name}""");
 
                                                 Directory.SetCurrentDirectory(data["path"]);
                                                 if (name == data["name"].ToLower())
@@ -46,36 +99,36 @@ namespace Wecres.ECrun
                                                 Directory.Delete("src");
                                                 Directory.CreateDirectory("public");
                                                 File.WriteAllText(@"public\index.html", @"<!DOCTYPE html>
-    <html lang=""ja"">
-    <head>
-        <meta charset=""UTF-8"">
-        <title></title>
-    </head>
-    <body>
-        <div id=""root""></div>
-    </body>
-    </html>");
+<html lang=""ja"">
+<head>
+    <meta charset=""UTF-8"">
+    <title></title>
+</head>
+<body>
+    <div id=""root""></div>
+</body>
+</html>");
                                                 Directory.CreateDirectory("src");
                                                 File.WriteAllText(@"src\index.jsx", @"import React from 'react';
-    import ReactDOM from 'react-dom';
-    import App from './App';
+import ReactDOM from 'react-dom';
+import App from './App';
 
-    ReactDOM.render(
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>,
-      document.getElementById('root')
-    );");
+ReactDOM.render(
+    <React.StrictMode>
+    <App />
+    </React.StrictMode>,
+    document.getElementById('root')
+);");
                                                 File.WriteAllText(@"src\App.jsx", @"import React from 'react';
 
-    function App() {
-      return (
-        <div></div>
-      );
-    }
+function App() {
+    return (
+    <div></div>
+    );
+}
 
-    export default App;
-    ");
+export default App;
+");
                                             });
                                         }
                                     }
@@ -89,9 +142,9 @@ namespace Wecres.ECrun
                                             Task.Run(() =>
                                             {
                                                 RunPowershell($@"
-    Set-Location ""{data["path"]}""
-    npx create-react-app ""{name}"" --template typescript
-    ");
+Set-Location ""{data["path"]}""
+npx create-react-app ""{name}"" --template typescript
+");
 
                                                 Directory.SetCurrentDirectory(data["path"]);
                                                 if (name == data["name"].ToLower())
@@ -107,36 +160,36 @@ namespace Wecres.ECrun
                                                 Directory.Delete("src");
                                                 Directory.CreateDirectory("public");
                                                 File.WriteAllText(@"public\index.html", @"<!DOCTYPE html>
-    <html lang=""ja"">
-    <head>
-        <meta charset=""UTF-8"">
-        <title></title>
-    </head>
-    <body>
-        <div id=""root""></div>
-    </body>
-    </html>");
+<html lang=""ja"">
+<head>
+    <meta charset=""UTF-8"">
+    <title></title>
+</head>
+<body>
+    <div id=""root""></div>
+</body>
+</html>");
                                                 Directory.CreateDirectory("src");
                                                 File.WriteAllText(@"src\index.tsx", @"import React from 'react';
-    import ReactDOM from 'react-dom';
-    import App from './App';
+import ReactDOM from 'react-dom';
+import App from './App';
 
-    ReactDOM.render(
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>,
-      document.getElementById('root')
-    );");
+ReactDOM.render(
+    <React.StrictMode>
+    <App />
+    </React.StrictMode>,
+    document.getElementById('root')
+);");
                                                 File.WriteAllText(@"src\App.tsx", @"import React from 'react';
 
-    function App() {
-      return (
-        <div></div>
-      );
-    }
+function App() {
+    return (
+    <div></div>
+    );
+}
 
-    export default App;
-    ");
+export default App;
+");
                                             });
                                         }
                                     }

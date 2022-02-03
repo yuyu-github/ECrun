@@ -16,6 +16,12 @@ namespace Wecres.ECrun
                 "BuildEnv", new Dictionary<string, ComboBoxItems>
                 {
                     {
+                        "WebApp", new ComboBoxItems(new string[,]
+                        {
+                            { "TypeScript", "TypeScript" }
+                        })
+                    },
+                    {
                         "React", new ComboBoxItems(new string[,]
                         {
                             { "デフォルト", "Default" },
