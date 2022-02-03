@@ -71,6 +71,8 @@ namespace Wecres.ECrun
             comboBox1.DataSource = new ComboBoxItems(new string[,] {
                 { "環境構築", "BuildEnv" },
                 { "実行", "Run" },
+                { "コンパイル", "Compile" },
+                { "逆コンパイル", "Decompile" }
             }).List;
             comboBox1.SelectedIndex = 0;
         }

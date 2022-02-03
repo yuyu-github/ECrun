@@ -13,17 +13,31 @@ namespace Wecres.ECrun
         internal static Dictionary<string, ComboBoxItems> Types = new Dictionary<string, ComboBoxItems>
         {
             {
-                "BuildEnv", new ComboBoxItems(new string[,] {
+                "BuildEnv", new ComboBoxItems(new string[,]
+                {
                     { "React", "React" },
                     { "React (TypeScript)", "React-TypeScript" },
                 })
             },
             {
-                "Run", new ComboBoxItems(new string[,] {
+                "Run", new ComboBoxItems(new string[,]
+                {
                     { "React", "React" },
                     { "React (TypeScript)", "React-TypeScript" },
                 })
             },
+            {
+                "Compile", new ComboBoxItems(new string[,]
+                {
+
+                })
+            },
+            {
+                "Decompile", new ComboBoxItems(new string[,]
+                {
+
+                })
+            }
         };
     }
 }

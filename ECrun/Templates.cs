@@ -13,15 +13,29 @@ namespace Wecres.ECrun
         internal static Dictionary<string, Dictionary<string, ComboBoxItems>> Templates = new Dictionary<string, Dictionary<string, ComboBoxItems>>
         {
             {
-                "BuildEnv", new Dictionary<string, ComboBoxItems> {
+                "BuildEnv", new Dictionary<string, ComboBoxItems>
+                {
 
                 }
             },
             {
-                "Run", new Dictionary<string, ComboBoxItems> {
+                "Run", new Dictionary<string, ComboBoxItems>
+                {
 
                 }
             },
+            {
+                "Compile", new Dictionary<string, ComboBoxItems>
+                {
+
+                }
+            },
+            {
+                "Decompile", new Dictionary<string, ComboBoxItems>
+                {
+
+                }
+            }
         };
     }
 }
