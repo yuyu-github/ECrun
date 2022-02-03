@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
 using System.Management.Automation;
 using System.Text.RegularExpressions;
@@ -78,17 +79,25 @@ namespace Wecres.ECrun
                                     if (TestNodeJS())
                                     {
                                         string name = Regex.Replace(data["name"].ToLower(), @"[^a-z0-9\-_]", "");
-                                        int randomValue = new Random().Next(0, int.MaxValue);
-                                        Task.Run(() => RunPowershell($@"
+                                        Task.Run(() =>
+                                        {
+                                            Directory.SetCurrentDirectory(data["path"]);
+
+                                            RunPowershell($@"
 Set-Location ""{data["path"]}""
 npx create-react-app ""{name}""
-{(name == data["name"].ToLower() ? $@"
-Rename-Item ""{name}"" ""{name + randomValue}""
-Rename-Item ""{name + randomValue}"" ""{data["name"]}""
-" : $@"
-Rename-Item ""{name}"" ""{data["name"]}""
-")}
-"));
+");
+
+                                            if (name == data["name"].ToLower())
+                                            {
+                                                int randomValue = new Random().Next(0, int.MaxValue);
+                                                Directory.Move(name, name + randomValue);
+                                                Directory.Move(name + randomValue, data["name"]);
+                                            }
+                                            else Directory.Move(name, data["name"]);
+
+
+                                        });
                                     }
                                 }
                             }
@@ -103,17 +112,21 @@ Rename-Item ""{name}"" ""{data["name"]}""
                                     if (TestNodeJS())
                                     {
                                         string name = Regex.Replace(data["name"].ToLower(), @"[^a-z0-9\-_]", "");
-                                        int randomValue = new Random().Next(0, int.MaxValue);
-                                        Task.Run(() => RunPowershell($@"
+                                        Task.Run(() =>
+                                        {
+                                            RunPowershell($@"
 Set-Location ""{data["path"]}""
 npx create-react-app ""{name}"" --template typescript
-{(name == data["name"].ToLower() ? $@"
-Rename-Item ""{name}"" ""{name + randomValue}""
-Rename-Item ""{name + randomValue}"" ""{data["name"]}""
-" : $@"
-Rename-Item ""{name}"" ""{data["name"]}""
-")}
-"));
+");
+
+                                            if (name == data["name"].ToLower())
+                                            {
+                                                int randomValue = new Random().Next(0, int.MaxValue);
+                                                Directory.Move(name, name + randomValue);
+                                                Directory.Move(name + randomValue, data["name"]);
+                                            }
+                                            else Directory.Move(name, data["name"]);
+                                        });
                                     }
                                 }
                             }
@@ -132,10 +145,13 @@ Rename-Item ""{name}"" ""{data["name"]}""
                                     if (TestNodeJS())
                                     {
                                         string name = Regex.Replace(data["name"].ToLower(), @"[^a-z0-9\-_]", "");
-                                        Task.Run(() => RunPowershell($@"
+                                        Task.Run(() =>
+                                        {
+                                            RunPowershell($@"
 Set-Location ""{data["path"] + "\\" + data["name"]}""
 npm start
-"));
+");
+                                        });
                                     }
                                 }
                             }
@@ -150,10 +166,13 @@ npm start
                                     if (TestNodeJS())
                                     {
                                         string name = Regex.Replace(data["name"].ToLower(), @"[^a-z0-9\-_]", "");
-                                        Task.Run(() => RunPowershell($@"
+                                        Task.Run(() =>
+                                        {
+                                            RunPowershell($@"
 Set-Location ""{data["path"] + "\\" + data["name"]}""
 npm start
-"));
+");
+                                        });
                                     }
                                 }
                             }
