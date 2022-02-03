@@ -13,16 +13,20 @@ using System.Text.RegularExpressions;
 using System.Collections.ObjectModel;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
+using static Wecres.ECrun.Type;
+using static Wecres.ECrun.Template;
+using static Wecres.ECrun.Function;
+
 namespace Wecres.ECrun
 {
     public partial class Form1 : Form
     {
-        static Collection<PSObject> RunPowershell(string script)
+        public static Collection<PSObject> RunPowershell(string script)
         {
             using (var invoker = new RunspaceInvoke()) return invoker.Invoke(script);
         }
 
-        static bool TestNodeJS()
+        public static bool TestNodeJS()
         {
             foreach (var result in RunPowershell("(Get-Command node -ErrorAction SilentlyContinue) -eq $null"))
             {
@@ -35,154 +39,7 @@ namespace Wecres.ECrun
             return true;
         }
 
-        Dictionary<string, ComboBoxItems> Types = new Dictionary<string, ComboBoxItems>
-        {
-            {
-                "BuildEnv", new ComboBoxItems(new string[,] {
-                    { "React", "React" },
-                    { "React (TypeScript)", "React-TypeScript" },
-                })
-            },
-            {
-                "Run", new ComboBoxItems(new string[,] {
-                    { "React", "React" },
-                    { "React (TypeScript)", "React-TypeScript" },
-                })
-            },
-        };
-
-        Dictionary<string, Dictionary<string, ComboBoxItems>> Templates = new Dictionary<string, Dictionary<string, ComboBoxItems>>
-        {
-            {
-                "BuildEnv", new Dictionary<string, ComboBoxItems> {
-                    
-                }
-            },
-            {
-                "Run", new Dictionary<string, ComboBoxItems> {
-
-                }
-            },
-        };
-
-        Dictionary<string, Dictionary<string, Dictionary<string, Action<Dictionary<string, string>>>>> Functions =
-            new Dictionary<string, Dictionary<string, Dictionary<string, Action<Dictionary<string, string>>>>>
-        {
-            {
-                "BuildEnv", new Dictionary<string, Dictionary<string, Action<Dictionary<string, string>>>> {
-                    {
-                        "React", new Dictionary<string, Action<Dictionary<string, string>>>
-                        {
-                            {
-                                "Default", data =>
-                                {
-                                    if (TestNodeJS())
-                                    {
-                                        string name = Regex.Replace(data["name"].ToLower(), @"[^a-z0-9\-_]", "");
-                                        Task.Run(() =>
-                                        {
-                                            Directory.SetCurrentDirectory(data["path"]);
-
-                                            RunPowershell($@"
-Set-Location ""{data["path"]}""
-npx create-react-app ""{name}""
-");
-
-                                            if (name == data["name"].ToLower())
-                                            {
-                                                int randomValue = new Random().Next(0, int.MaxValue);
-                                                Directory.Move(name, name + randomValue);
-                                                Directory.Move(name + randomValue, data["name"]);
-                                            }
-                                            else Directory.Move(name, data["name"]);
-
-
-                                        });
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "React-TypeScript", new Dictionary<string, Action<Dictionary<string, string>>>
-                        {
-                            {
-                                "Default", data =>
-                                {
-                                    if (TestNodeJS())
-                                    {
-                                        string name = Regex.Replace(data["name"].ToLower(), @"[^a-z0-9\-_]", "");
-                                        Task.Run(() =>
-                                        {
-                                            RunPowershell($@"
-Set-Location ""{data["path"]}""
-npx create-react-app ""{name}"" --template typescript
-");
-
-                                            if (name == data["name"].ToLower())
-                                            {
-                                                int randomValue = new Random().Next(0, int.MaxValue);
-                                                Directory.Move(name, name + randomValue);
-                                                Directory.Move(name + randomValue, data["name"]);
-                                            }
-                                            else Directory.Move(name, data["name"]);
-                                        });
-                                    }
-                                }
-                            }
-                        }
-                    },
-                }
-            },
-            {
-                "Run", new Dictionary<string, Dictionary<string, Action<Dictionary<string, string>>>> {
-                    {
-                        "React", new Dictionary<string, Action<Dictionary<string, string>>>
-                        {
-                            {
-                                "Default", data =>
-                                {
-                                    if (TestNodeJS())
-                                    {
-                                        string name = Regex.Replace(data["name"].ToLower(), @"[^a-z0-9\-_]", "");
-                                        Task.Run(() =>
-                                        {
-                                            RunPowershell($@"
-Set-Location ""{data["path"] + "\\" + data["name"]}""
-npm start
-");
-                                        });
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "React-TypeScript", new Dictionary<string, Action<Dictionary<string, string>>>
-                        {
-                            {
-                                "Default", data =>
-                                {
-                                    if (TestNodeJS())
-                                    {
-                                        string name = Regex.Replace(data["name"].ToLower(), @"[^a-z0-9\-_]", "");
-                                        Task.Run(() =>
-                                        {
-                                            RunPowershell($@"
-Set-Location ""{data["path"] + "\\" + data["name"]}""
-npm start
-");
-                                        });
-                                    }
-                                }
-                            }
-                        }
-                    },
-                }
-            },
-        };
-
-        class ComboBoxItems
+        public class ComboBoxItems
         {
             public class ComboBoxItem
             {
