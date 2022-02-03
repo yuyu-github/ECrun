@@ -154,7 +154,43 @@ namespace Wecres.ECrun
                 {
                     "Compile", new Dictionary<string, Dictionary<string, Action<Dictionary<string, string>>>>
                     {
-
+                        {
+                            "React", new Dictionary<string, Action<Dictionary<string, string>>>
+                            {
+                                {
+                                    "Default", data =>
+                                    {
+                                        if (TestNodeJS())
+                                        {
+                                            string name = Regex.Replace(data["name"].ToLower(), @"[^a-z0-9\-_]", "");
+                                            Task.Run(() =>
+                                            {
+                                                RunPowershell($@"
+    Set-Location ""{data["path"] + "\\" + data["name"]}""
+    npm run build
+    ");
+                                            });
+                                        }
+                                    }
+                                },
+                                {
+                                    "TypeScript", data =>
+                                    {
+                                        if (TestNodeJS())
+                                        {
+                                            string name = Regex.Replace(data["name"].ToLower(), @"[^a-z0-9\-_]", "");
+                                            Task.Run(() =>
+                                            {
+                                                RunPowershell($@"
+    Set-Location ""{data["path"] + "\\" + data["name"]}""
+    npm run build
+    ");
+                                            });
+                                        }
+                                    }
+                                }
+                            }
+                        },
                     }
                 },
                 {

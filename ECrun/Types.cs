@@ -27,7 +27,7 @@ namespace Wecres.ECrun
             {
                 "Compile", new ComboBoxItems(new string[,]
                 {
-                    { "", "" }
+                    { "React", "React" }
                 })
             },
             {
