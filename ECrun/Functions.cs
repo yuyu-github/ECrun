@@ -40,7 +40,6 @@ npm install typescript");
                                                 File.WriteAllText("tsconfig.json", @"{
     ""compilerOptions"": {
         ""target"": ""es2016"",
-        ""module"": ""commonjs"",
         ""strict"": true,
         ""outDir"": ""./dist"",
     },
