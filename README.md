@@ -7,5 +7,7 @@
 - コンパイル
 - 逆コンパイル
 
-## 種類の一覧
+## 対応言語
 - React
+- React(TypeScript)
+- Webアプリ(TypeScript)
