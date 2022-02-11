@@ -8,6 +8,8 @@
 - 逆コンパイル
 
 ## 対応言語
+- Webアプリ (TypeScript)
 - React
-- React(TypeScript)
-- Webアプリ(TypeScript)
+- React (TypeScript)
+- React Native
+- React Native(TypeScript)
