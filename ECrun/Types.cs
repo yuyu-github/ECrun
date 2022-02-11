@@ -17,6 +17,7 @@ namespace Wecres.ECrun
                 {
                     { "Webアプリ", "WebApp" },
                     { "React", "React" },
+                    { "React Native", "ReactNative" },
                 })
             },
             {

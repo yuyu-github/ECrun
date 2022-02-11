@@ -28,6 +28,13 @@ namespace Wecres.ECrun
                             { "TypeScript", "TypeScript" },
                         })
                     },
+                    {
+                        "ReactNative", new ComboBoxItems(new string[,]
+                        {
+                            { "デフォルト", "Default" },
+                            { "TypeScript", "TypeScript" },
+                        })
+                    },
                 }
             },
             {

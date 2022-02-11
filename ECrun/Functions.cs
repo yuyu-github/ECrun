@@ -197,6 +197,37 @@ export default App;
                                 }
                             }
                         },
+                        {
+                            "ReactNative", new Dictionary<string, Action<Dictionary<string, string>>>
+                            {
+                                {
+                                    "Default", data =>
+                                    {
+                                        if (TestNodeJS())
+                                        {
+                                            Task.Run(() =>
+                                            {
+                                                RunPowershell($@"Set-Location ""{data["path"]}""
+npx react-native ""{data["name"]}""");
+                                            });
+                                        }
+                                    }
+                                },
+                                {
+                                    "TypeScript", data =>
+                                    {
+                                        if (TestNodeJS())
+                                        {
+                                            Task.Run(() =>
+                                            {
+                                                RunPowershell($@"Set-Location ""{data["path"]}""
+npx react-native ""{data["name"]}"" --template react-native-template-typescript");
+                                            });
+                                        }
+                                    }
+                                }
+                            }
+                        },
                     }
                 },
                 {
